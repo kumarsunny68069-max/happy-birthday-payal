@@ -1803,12 +1803,15 @@ body {
     background: #fff;
     padding: 16px 16px 50px 16px;
     z-index: 2;
+    transform: translateZ(1px);
+    -webkit-transform: translateZ(1px);
 }
 
 .polaroid-back {
     background: linear-gradient(135deg, #fff3f8 0%, #ffe9f2 100%);
     padding: 30px 20px;
-    transform: rotateY(180deg);
+    transform: rotateY(180deg) translateZ(1px);
+    -webkit-transform: rotateY(180deg) translateZ(1px);
     display: flex;
     align-items: center;
     justify-content: center;

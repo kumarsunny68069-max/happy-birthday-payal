@@ -788,7 +788,7 @@ function initScrollAnimations() {
     // Polaroid cards staggered float in
     gsap.from('.polaroid', {
         scrollTrigger: {
-            trigger: '.gallery',
+            trigger: '.gallery-section',
             start: 'top 85%',
         },
         y: 80,
