@@ -397,7 +397,7 @@
                         <div class="gift-main"></div>
                     </div>
                 </div>
-                <span class="gift-hint">Click the gift box to open the final letter!</span>
+                <span class="gift-hint">Click the gift box to unwrap your special surprise! 🎁</span>
             </div>
         </section>
 
@@ -428,6 +428,55 @@
         </div>
     </div>
 
+    <!-- POPUP MODAL FOR THE FINAL SURPRISE GIFT (Coupons & Popping Art) -->
+    <div class="gift-modal-overlay" id="gift-modal-overlay">
+        <div class="gift-modal glass-panel">
+            <button class="gift-modal-close" id="gift-modal-close-btn" aria-label="Close gift"><i class="fas fa-times"></i></button>
+            <div class="gift-modal-header">
+                <h2>Your Special Birthday Surprise! 🎁✨</h2>
+                <p>A little bundle of interactive bestie vouchers made just for you!</p>
+            </div>
+            
+            <!-- Blooming Flower Bouquet Art -->
+            <div class="gift-popout-art">
+                <div class="flower-bouquet">
+                    <div class="flower flower-1">🌸</div>
+                    <div class="flower flower-2">🌹</div>
+                    <div class="flower flower-3">🌻</div>
+                    <div class="flower flower-4">🌷</div>
+                    <div class="flower flower-5">🌺</div>
+                    <div class="bouquet-wrap">💐</div>
+                </div>
+                <div class="glowing-halo"></div>
+            </div>
+
+            <!-- Coupons Deck -->
+            <div class="coupons-deck">
+                <div class="coupon-card" id="coupon-1">
+                    <div class="coupon-pattern"></div>
+                    <span class="coupon-badge">Voucher #1</span>
+                    <h3>🍦 Unlimited Ice Cream</h3>
+                    <p>Good for one endless supply of your favorite ice cream scoop whenever you demand it! 🍨</p>
+                    <button class="coupon-use-btn" onclick="redeemCoupon(1)">Activate Coupon ⚡</button>
+                </div>
+                <div class="coupon-card" id="coupon-2">
+                    <div class="coupon-pattern"></div>
+                    <span class="coupon-badge">Voucher #2</span>
+                    <h3>☕ Late Night Gossip</h3>
+                    <p>Entitles you to call me at 2 AM to talk about literally anything without a single complaint! 📞</p>
+                    <button class="coupon-use-btn" onclick="redeemCoupon(2)">Activate Coupon ⚡</button>
+                </div>
+                <div class="coupon-card" id="coupon-3">
+                    <div class="coupon-pattern"></div>
+                    <span class="coupon-badge">Voucher #3</span>
+                    <h3>🍿 Movie Selection</h3>
+                    <p>Gives you 100% control over selecting the movie and snacks for our next sweet hangout! 🎬</p>
+                    <button class="coupon-use-btn" onclick="redeemCoupon(3)">Activate Coupon ⚡</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- FOOTER -->
     <footer class="footer">
         <p>Made with 💖 just for Payal</p>
@@ -444,9 +493,9 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <!-- 3D WebGL Background Render at root -->
-    <script type="module" src="three-bg.js"></script>
+    <script src="three-bg.js"></script>
     
     <!-- Custom Logic Script at root -->
-    <script type="module" src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

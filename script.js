@@ -608,26 +608,28 @@ function initPolaroidLightbox() {
 }
 
 
-// POPUP LETTER Surprise box
+// POPUP LETTER & SURPRISE GIFT BOX
 function initLetterPopups() {
     const claimBtn = document.getElementById('claim-gift-btn');
     const giftBox = document.getElementById('interact-gift-box');
-    const overlay = document.getElementById('letter-modal-overlay');
-    const closeBtn = document.getElementById('letter-close-btn');
+    const letterOverlay = document.getElementById('letter-modal-overlay');
+    const letterCloseBtn = document.getElementById('letter-close-btn');
     
+    const giftOverlay = document.getElementById('gift-modal-overlay');
+    const giftCloseBtn = document.getElementById('gift-modal-close-btn');
+    
+    // 1. Letter Opening (from Quiz Claim button)
     const openLetter = () => {
         initAudioContext();
-        overlay.classList.add('active');
-        
-        // Massive screen celebration shower
+        letterOverlay.classList.add('active');
         if (typeof confetti === 'function') {
-            const end = Date.now() + (2 * 1000);
+            const end = Date.now() + (1.5 * 1000);
             const interval = setInterval(() => {
                 if (Date.now() > end) return clearInterval(interval);
                 confetti({
-                    startVelocity: 30,
+                    startVelocity: 25,
                     spread: 360,
-                    ticks: 60,
+                    ticks: 50,
                     origin: { x: Math.random(), y: Math.random() - 0.2 }
                 });
             }, 200);
@@ -636,7 +638,25 @@ function initLetterPopups() {
     
     claimBtn.addEventListener('click', openLetter);
     
-    // Lid opening animation on giftbox click
+    const closeLetter = () => letterOverlay.classList.remove('active');
+    letterCloseBtn.addEventListener('click', closeLetter);
+    letterOverlay.addEventListener('click', (e) => {
+        if (e.target === letterOverlay) closeLetter();
+    });
+
+    // 2. Surprise Gift Box Opening (from Final page gift box)
+    const openGiftSurprise = () => {
+        initAudioContext();
+        giftOverlay.classList.add('active');
+        if (typeof confetti === 'function') {
+            confetti({
+                particleCount: 120,
+                spread: 90,
+                colors: ['#ffb300', '#ff1744', '#ff8f00', '#ff4f87', '#ffffff']
+            });
+        }
+    };
+
     if (giftBox) {
         giftBox.addEventListener('click', () => {
             const lid = giftBox.querySelector('.gift-lid');
@@ -644,7 +664,7 @@ function initLetterPopups() {
             lid.style.opacity = '0.5';
             
             setTimeout(() => {
-                openLetter();
+                openGiftSurprise();
                 // reset lid
                 setTimeout(() => {
                     lid.style.transform = '';
@@ -653,13 +673,43 @@ function initLetterPopups() {
             }, 450);
         });
     }
-    
-    const closeLetter = () => overlay.classList.remove('active');
-    closeBtn.addEventListener('click', closeLetter);
-    overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) closeLetter();
-    });
+
+    const closeGiftSurprise = () => giftOverlay.classList.remove('active');
+    if (giftCloseBtn) giftCloseBtn.addEventListener('click', closeGiftSurprise);
+    if (giftOverlay) {
+        giftOverlay.addEventListener('click', (e) => {
+            if (e.target === giftOverlay) closeGiftSurprise();
+        });
+    }
 }
+
+// REDEEM VOUCHER COUPON ACTION
+window.redeemCoupon = function(id) {
+    initAudioContext();
+    const card = document.getElementById(`coupon-${id}`);
+    if (!card || card.classList.contains('redeemed')) return;
+    
+    card.classList.add('redeemed');
+    playPopSound(); // play pop chime
+    
+    // Shower green/yellow/white confetti on coupon redemption
+    if (typeof confetti === 'function') {
+        const rect = card.getBoundingClientRect();
+        confetti({
+            particleCount: 50,
+            spread: 60,
+            origin: { x: (rect.left + rect.width / 2) / window.innerWidth, y: (rect.top + rect.height / 2) / window.innerHeight },
+            colors: ['#4caf50', '#81c784', '#ffeb3b', '#ffffff']
+        });
+    }
+    
+    // Update button text
+    const btn = card.querySelector('.coupon-use-btn');
+    if (btn) {
+        btn.innerText = 'Redeemed! 💖';
+        btn.disabled = true;
+    }
+};
 
 
 // GSAP SCROLL-TRIGGERED ENTRANCE EFFECTS
@@ -809,9 +859,6 @@ function init3dTilt() {
             card.style.transition = 'none';
         });
     });
-}
-
-
 }
 
 // PINEAPPLE MODE WIDGET INJECTION

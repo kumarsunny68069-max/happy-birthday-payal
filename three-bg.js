@@ -384,9 +384,7 @@ class ThreeBgScene {
     }
 }
 
-// Instantiate on window load
-window.addEventListener('DOMContentLoaded', () => {
-    if (typeof THREE !== 'undefined') {
-        window.threeBgSceneInstance = new ThreeBgScene();
-    }
-});
+// Instantiate immediately since scripts are loaded at the bottom of body and DOM is ready
+if (typeof THREE !== 'undefined') {
+    window.threeBgSceneInstance = new ThreeBgScene();
+}
