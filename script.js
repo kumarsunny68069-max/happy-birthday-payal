@@ -607,6 +607,28 @@ function initPolaroidLightbox() {
     });
 }
 
+// POLAROID REVEAL ON SCROLL (Intersection Observer)
+function initPolaroidReveal() {
+    const polaroids = document.querySelectorAll('.polaroid');
+    if (!polaroids.length) return;
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry, idx) => {
+            if (entry.isIntersecting) {
+                // Staggered reveal effect
+                setTimeout(() => {
+                    entry.target.classList.add('reveal-active');
+                }, idx * 100);
+                obs.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.05,
+        rootMargin: '0px 0px -40px 0px'
+    });
+
+    polaroids.forEach(card => observer.observe(card));
+}
 
 // POPUP LETTER & SURPRISE GIFT BOX
 function initLetterPopups() {
@@ -783,20 +805,6 @@ function initScrollAnimations() {
         opacity: 0,
         duration: 1,
         ease: 'power3.out'
-    });
-    
-    // Polaroid cards staggered float in
-    gsap.from('.polaroid', {
-        scrollTrigger: {
-            trigger: '.gallery-section',
-            start: 'top 85%',
-        },
-        y: 80,
-        rotation: () => Math.random() * 20 - 10,
-        opacity: 0,
-        stagger: 0.2,
-        duration: 1.2,
-        ease: 'back.out(1.4)'
     });
     
     // Scratch Cards staggered drift in
@@ -1024,6 +1032,7 @@ window.addEventListener('DOMContentLoaded', () => {
     initQuizEngine();
     initPolaroidLightbox();
     initLetterPopups();
+    initPolaroidReveal();
     
     // 5. Scroll Reveals
     initScrollAnimations();
