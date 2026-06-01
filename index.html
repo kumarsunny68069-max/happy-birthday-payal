@@ -179,7 +179,7 @@
                 
                 <div class="quiz-container">
                     <div class="quiz-card active" id="q1" data-step="1">
-                        <span class="q-progress">Question 1 of 3</span>
+                        <span class="q-progress">Question 1 of 4</span>
                         <h3>What is Payal's absolute superpower?</h3>
                         <div class="quiz-options">
                             <button class="option-btn" data-correct="true">Spreading instant happiness 💖</button>
@@ -190,7 +190,7 @@
                     </div>
                     
                     <div class="quiz-card" id="q2" data-step="2">
-                        <span class="q-progress">Question 2 of 3</span>
+                        <span class="q-progress">Question 2 of 4</span>
                         <h3>What description fits Payal perfectly?</h3>
                         <div class="quiz-options">
                             <button class="option-btn" data-correct="false">Strict & Serious Leader 👮‍♀️</button>
@@ -201,7 +201,7 @@
                     </div>
                     
                     <div class="quiz-card" id="q3" data-step="3">
-                        <span class="q-progress">Question 3 of 3</span>
+                        <span class="q-progress">Question 3 of 4</span>
                         <h3>If Payal were a season, she would be...</h3>
                         <div class="quiz-options">
                             <button class="option-btn" data-correct="false">Freezing Cold Winter ❄️</button>
@@ -211,10 +211,21 @@
                         </div>
                     </div>
 
+                    <div class="quiz-card" id="q4" data-step="4">
+                        <span class="q-progress">Question 4 of 4</span>
+                        <h3>What nickname does she love to call you? 🤫</h3>
+                        <div class="quiz-options">
+                            <button class="option-btn" data-correct="false">Mr. Apple 🍎</button>
+                            <button class="option-btn" data-correct="true">Pineapple 🍍</button>
+                            <button class="option-btn" data-correct="false">Mango King 🥭</button>
+                            <button class="option-btn" data-correct="false">Banana Bro 🍌</button>
+                        </div>
+                    </div>
+
                     <!-- Secret Reward (Hidden initially) -->
                     <div class="quiz-reward" id="quiz-success-card">
                         <div class="reward-icon"><i class="fas fa-trophy"></i></div>
-                        <h3>3/3 Score! Vibe Match: 100%</h3>
+                        <h3>4/4 Score! Vibe Match: 100%</h3>
                         <p>You know Payal perfectly! Here is your special reward voucher code:</p>
                         <div class="voucher-code" id="voucher">VIBE-PAYAL-BESTIE</div>
                         <button class="btn btn-claim" id="claim-gift-btn">Claim Bestie Gift 🎁</button>
@@ -243,37 +254,77 @@
                     <!-- Polaroid Card 1 -->
                     <div class="gallery-card polaroid" id="pol-1">
                         <div class="pin"></div>
-                        <div class="polaroid-img-wrapper image-fallback-wrapper" data-fallback-label="Memory #1 🌟">
-                            <img src="3.png" alt="Memory 1" onerror="this.style.display='none'; this.parentElement.classList.add('show-fallback');">
+                        <div class="polaroid-inner">
+                            <div class="polaroid-front">
+                                <div class="polaroid-img-wrapper image-fallback-wrapper" data-fallback-label="Memory #1 🌟">
+                                    <img src="3.png" alt="Memory 1" onerror="this.style.display='none'; this.parentElement.classList.add('show-fallback');">
+                                </div>
+                                <div class="caption">Sweet Times 🎂</div>
+                            </div>
+                            <div class="polaroid-back">
+                                <div class="polaroid-back-content">
+                                    <i class="fas fa-heart back-heart"></i>
+                                    <p>Remember this day? The cake was delicious, but your laugh was the highlight! 🎂✨</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="caption">Sweet Times 🎂</div>
                     </div>
                     
                     <!-- Polaroid Card 2 -->
                     <div class="gallery-card polaroid" id="pol-2">
                         <div class="pin"></div>
-                        <div class="polaroid-img-wrapper image-fallback-wrapper" data-fallback-label="Memory #2 🌸">
-                            <img src="4.png" alt="Memory 2" onerror="this.style.display='none'; this.parentElement.classList.add('show-fallback');">
+                        <div class="polaroid-inner">
+                            <div class="polaroid-front">
+                                <div class="polaroid-img-wrapper image-fallback-wrapper" data-fallback-label="Memory #2 🌸">
+                                    <img src="4.png" alt="Memory 2" onerror="this.style.display='none'; this.parentElement.classList.add('show-fallback');">
+                                </div>
+                                <div class="caption">Cute Smiles ✨</div>
+                            </div>
+                            <div class="polaroid-back">
+                                <div class="polaroid-back-content">
+                                    <i class="fas fa-star back-heart" style="color: #ffb300;"></i>
+                                    <p>Your smile in this picture is literally my favorite thing in the world. Keep smiling always! 🌸</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="caption">Cute Smiles ✨</div>
                     </div>
                     
                     <!-- Polaroid Card 3 -->
                     <div class="gallery-card polaroid" id="pol-3">
                         <div class="pin"></div>
-                        <div class="polaroid-img-wrapper image-fallback-wrapper" data-fallback-label="Memory #3 🎈">
-                            <img src="5.png" alt="Memory 3" onerror="this.style.display='none'; this.parentElement.classList.add('show-fallback');">
+                        <div class="polaroid-inner">
+                            <div class="polaroid-front">
+                                <div class="polaroid-img-wrapper image-fallback-wrapper" data-fallback-label="Memory #3 🎈">
+                                    <img src="5.png" alt="Memory 3" onerror="this.style.display='none'; this.parentElement.classList.add('show-fallback');">
+                                </div>
+                                <div class="caption">Unforgettable Days 💖</div>
+                            </div>
+                            <div class="polaroid-back">
+                                <div class="polaroid-back-content">
+                                    <i class="fas fa-candy-cane back-heart" style="color: #c586ff;"></i>
+                                    <p>A day filled with crazy jokes and endless gossip. Can we repeat this soon? 💖</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="caption">Unforgettable Days 💖</div>
                     </div>
                     
                     <!-- Polaroid Card 4 -->
                     <div class="gallery-card polaroid" id="pol-4">
                         <div class="pin"></div>
-                        <div class="polaroid-img-wrapper image-fallback-wrapper" data-fallback-label="Memory #4 💕">
-                            <img src="6.png" alt="Memory 4" onerror="this.style.display='none'; this.parentElement.classList.add('show-fallback');">
+                        <div class="polaroid-inner">
+                            <div class="polaroid-front">
+                                <div class="polaroid-img-wrapper image-fallback-wrapper" data-fallback-label="Memory #4 💕">
+                                    <img src="6.png" alt="Memory 4" onerror="this.style.display='none'; this.parentElement.classList.add('show-fallback');">
+                                </div>
+                                <div class="caption">Best Vibe Together 🎀</div>
+                            </div>
+                            <div class="polaroid-back">
+                                <div class="polaroid-back-content">
+                                    <i class="fas fa-pineapple back-heart" style="color: #ffa000;"></i>
+                                    <p>No matter where we are, our vibe matches 100%. Dedicated to the best Pineapple! 🍍🎀</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="caption">Best Vibe Together 🎀</div>
                     </div>
                 </div>
             </div>

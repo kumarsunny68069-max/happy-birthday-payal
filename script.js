@@ -17,6 +17,11 @@ function initAudioContext() {
 function playChimeNote(freq, startTime, duration) {
     if (!audioCtx) return;
     
+    // Trigger 3D shapes pulse in WebGL background
+    if (window.threeBgSceneInstance && typeof window.threeBgSceneInstance.triggerBeatPulse === 'function') {
+        window.threeBgSceneInstance.triggerBeatPulse();
+    }
+    
     const osc = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
     const delayNode = audioCtx.createDelay();
@@ -580,49 +585,25 @@ styleSheet.innerText = `
 document.head.appendChild(styleSheet);
 
 
-// POLAROID GALLERY LIGHTBOX ENGINE
+// POLAROID GALLERY 3D FLIP ENGINE
 function initPolaroidLightbox() {
     const polaroids = document.querySelectorAll('.polaroid');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxCaption = document.getElementById('lightbox-caption');
-    const closeBtn = document.getElementById('lightbox-close-btn');
     
     polaroids.forEach(card => {
         card.addEventListener('click', () => {
-            const imgEl = card.querySelector('img');
-            const capEl = card.querySelector('.caption');
+            initAudioContext();
+            card.classList.toggle('flipped');
             
-            // Check if standard picture or fallback is shown
-            if (imgEl && imgEl.style.display !== 'none') {
-                lightboxImg.src = imgEl.src;
-                lightboxImg.style.display = 'inline-block';
-            } else {
-                // Image missing - use a gradient representation in lightbox
-                lightboxImg.style.display = 'none';
-            }
-            
-            lightboxCaption.innerText = capEl ? capEl.innerText : 'Memories';
-            lightbox.classList.add('active');
-            
-            // Small polaroid pop confetti
-            if (typeof confetti === 'function') {
+            // Trigger 3D click confetti
+            if (typeof confetti === 'function' && card.classList.contains('flipped')) {
+                const rect = card.getBoundingClientRect();
                 confetti({
-                    particleCount: 25,
-                    spread: 60
+                    particleCount: 15,
+                    spread: 40,
+                    origin: { x: (rect.left + rect.width/2)/window.innerWidth, y: (rect.top + rect.height/2)/window.innerHeight }
                 });
             }
         });
-    });
-    
-    // Close Lightbox
-    const closeLightbox = () => lightbox.classList.remove('active');
-    closeBtn.addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) closeLightbox();
-    });
-    window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeLightbox();
     });
 }
 
@@ -831,6 +812,154 @@ function init3dTilt() {
 }
 
 
+}
+
+// PINEAPPLE MODE WIDGET INJECTION
+function injectPineappleWidget() {
+    // 1. Dynamic style injection
+    const style = document.createElement('style');
+    style.innerText = `
+    .pineapple-toggle-widget {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        z-index: 999;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        background: var(--glass-bg);
+        border: 2px solid var(--glass-border);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+    }
+    .pineapple-toggle-widget:hover {
+        transform: scale(1.1) rotate(15deg);
+        background: var(--glass-bg-hover);
+        box-shadow: 0 10px 35px rgba(255, 179, 0, 0.25);
+    }
+    .pineapple-btn {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    .pineapple-tooltip {
+        position: absolute;
+        bottom: 58px;
+        right: 0;
+        background: rgba(0,0,0,0.75);
+        color: #fff;
+        font-size: 10px;
+        padding: 5px 10px;
+        border-radius: 8px;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+    .pineapple-toggle-widget:hover .pineapple-tooltip {
+        opacity: 1;
+    }
+    .pineapple-alert {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border: 2px solid #ffb300;
+        color: #ff8f00;
+        font-weight: 800;
+        font-size: 20px;
+        padding: 20px 40px;
+        border-radius: 20px;
+        z-index: 10000;
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 20px 40px rgba(255, 179, 0, 0.2);
+        letter-spacing: 1px;
+    }
+    `;
+    document.head.appendChild(style);
+
+    // 2. Button injection
+    const btn = document.createElement('div');
+    btn.id = 'pineapple-toggle-widget';
+    btn.className = 'pineapple-toggle-widget';
+    btn.innerHTML = `
+        <button class="pineapple-btn" id="pineapple-btn" aria-label="Toggle Pineapple Mode">🍍</button>
+        <span class="pineapple-tooltip">Click for Pineapple Mode! 🤫</span>
+    `;
+    document.body.appendChild(btn);
+    
+    let pineappleActive = false;
+    
+    btn.addEventListener('click', () => {
+        initAudioContext();
+        pineappleActive = !pineappleActive;
+        
+        // Toggle WebGL background mesh models
+        if (window.togglePineappleMode) {
+            window.togglePineappleMode(pineappleActive);
+        }
+        
+        // Tropical chime pop sound
+        playPopSound();
+        
+        // Confetti shower with yellow/green colors
+        if (typeof confetti === 'function') {
+            confetti({
+                particleCount: 80,
+                spread: 80,
+                colors: ['#ffeb3b', '#4caf50', '#ffc107', '#ffffff']
+            });
+        }
+        
+        // Alert banner text animation
+        const alertBanner = document.createElement('div');
+        alertBanner.className = 'pineapple-alert';
+        alertBanner.innerText = pineappleActive ? '🍍 PINEAPPLE MODE ACTIVE 🍍' : '💖 ROMANTIC MODE ACTIVE 💖';
+        document.body.appendChild(alertBanner);
+        setTimeout(() => {
+            alertBanner.style.opacity = '1';
+            alertBanner.style.transform = 'translate(-50%, -50%) scale(1)';
+        }, 50);
+        setTimeout(() => {
+            alertBanner.style.opacity = '0';
+            alertBanner.style.transform = 'translate(-50%, -50%) scale(0.9)';
+            setTimeout(() => alertBanner.remove(), 500);
+        }, 2200);
+        
+        // Dynamic title swaps
+        const popTitle = document.querySelector('.pop-score-widget .pop-title');
+        if (popTitle) {
+            popTitle.innerHTML = pineappleActive ? 
+                '<i class="fa-solid fa-pineapple"></i> Pineapple Pop:' : 
+                '<i class="fas fa-balloon"></i> Balloon Pop:';
+        }
+
+        // Body background override toggle
+        if (pineappleActive) {
+            document.body.style.setProperty('--primary-pink', '#ffa000');
+            document.body.style.setProperty('--pastel-pink', '#fff9c4');
+            document.body.style.setProperty('--pastel-purple', '#fffde7');
+            document.body.style.setProperty('--pastel-blue', '#f0f4c3');
+        } else {
+            document.body.style.removeProperty('--primary-pink');
+            document.body.style.removeProperty('--pastel-pink');
+            document.body.style.removeProperty('--pastel-purple');
+            document.body.style.removeProperty('--pastel-blue');
+        }
+    });
+}
+
+
 // LOAD EVENT BINDINGS
 window.addEventListener('DOMContentLoaded', () => {
     // 1. Initialise background particle canvas effects
@@ -855,6 +984,9 @@ window.addEventListener('DOMContentLoaded', () => {
     // 6. Interactive 3D Tilt effect
     init3dTilt();
     
-    // 7. Start popping balloons
+    // 7. Inject Pineapple Mode Toggle
+    injectPineappleWidget();
+    
+    // 8. Start popping balloons
     startBalloonGenerator();
 });

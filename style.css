@@ -1767,3 +1767,77 @@ body {
     pointer-events: none;
     display: block;
 }
+
+/* POLAROID 3D FLIP CARD STYLING */
+.polaroid {
+    perspective: 1000px;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    height: 350px !important;
+}
+
+.polaroid-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+}
+
+.polaroid.flipped .polaroid-inner {
+    transform: rotateY(180deg);
+}
+
+.polaroid-front, .polaroid-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+.polaroid-front {
+    background: #fff;
+    padding: 16px 16px 50px 16px;
+    z-index: 2;
+}
+
+.polaroid-back {
+    background: linear-gradient(135deg, #fff3f8 0%, #ffe9f2 100%);
+    padding: 30px 20px;
+    transform: rotateY(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 2px dashed rgba(255, 79, 154, 0.25);
+    z-index: 1;
+}
+
+.polaroid-back-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.polaroid-back-content p {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-dark);
+}
+
+.back-heart {
+    font-size: 32px;
+    color: var(--primary-pink);
+    animation: heartPulse 1.5s infinite ease-in-out alternate;
+}
+
+@keyframes heartPulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.2); }
+}
